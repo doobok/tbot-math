@@ -8,12 +8,11 @@ from aiohttp import web
 from loguru import logger
 
 from data import config
-from rediss_db import troll
-
-
 # noinspection PyUnusedLocal
+from utils.db.redis.consts import create_pools
+
+
 async def on_startup(app: web.Application):
-    # troll()
     import middlewares
     import filters
     import handlers
@@ -51,7 +50,7 @@ async def init() -> web.Application:
 
 if __name__ == '__main__':
     bot = Bot(config.BOT_TOKEN, parse_mode=ParseMode.HTML, validate_token=True)
-    storage = RedisStorage2(**config.redis)
+    storage = RedisStorage2(**config.redis, db=1)
     dp = Dispatcher(bot, storage=storage)
 
     web.run_app(init())

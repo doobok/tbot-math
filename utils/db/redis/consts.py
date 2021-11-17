@@ -10,7 +10,7 @@ data_pool: Optional[aioredis.Redis] = None
 
 async def create_pools():
     global data_pool
-    data_pool = await aioredis.create_redis_pool(**config.myredis)
+    data_pool = await aioredis.create_redis_pool(**config.myredis, db=1)
 
 
 class BaseRedis:

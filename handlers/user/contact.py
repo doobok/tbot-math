@@ -1,15 +1,14 @@
-import aioredis
-import requests
 from aiogram import types
+
 from data import config
 
 from utils.db.db_api.chats import Chats
 from utils.db.redis.consts import data_pool
+from utils.requests.api.requests import ExternalReq
 from utils.requests.users_reqests import UserRequest
 
 
 async def bot_contact(msg: types.Message) -> None:
-    print('ok')
     print(msg.contact.phone_number)
     if msg.from_user.id == msg.contact.user_id:
         print('is you contact')
