@@ -9,7 +9,7 @@ from utils.requests.users_reqests import UserRequest
 
 async def bot_contact(msg: types.Message) -> None:
     if msg.from_user.id == msg.contact.user_id:
-        user = await UserRequest.get_role(msg.contact.phone_number)
+        user = await UserRequest.get_role(int(msg.contact.phone_number))
         role = user_roles[user['role']]
         func = user_possibilities[user['role']]
 

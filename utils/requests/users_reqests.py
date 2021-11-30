@@ -8,3 +8,8 @@ class UserRequest(ExternalReq):
         data = {'phone': phone}
         r = await UserRequest.make_request(url, data)
         return r
+
+    @staticmethod
+    async def get_prices():
+        url = 'tariffs'
+        return await UserRequest.make_request(url)

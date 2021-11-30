@@ -18,7 +18,7 @@ class ExternalReq:
         print(uri)
         token = await ExternalReq._get_token()
         headers = {'Authorization': token}
-        res = requests.get(uri, data=data, headers=headers)
+        res = requests.get(uri, params=data, headers=headers)
         if res.status_code == 200:
             try:
                 res = res.json()

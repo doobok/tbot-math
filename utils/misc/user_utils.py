@@ -14,6 +14,6 @@ user_possibilities = {
     'tutor':   f'- розклад занять /shedule\n'
                f'- баланс /balance',
 
-    'guest':   f'- інформація /info\n'
+    'guest':   f'- знайомство з платформою /info\n'
                f'- ціни на послуги /pricing',
 }
