@@ -20,6 +20,12 @@ class User(MysqlConnection):
         await User._make_request(sql, params)
 
     @staticmethod
+    async def find(user_id: int):
+        sql = 'SELECT * FROM `users` WHERE `external_id` = %s'
+        params = (user_id,)
+        return await User._make_request(sql, params, fetch=True)
+
+    @staticmethod
     async def update(msg: types.Message, user):
         sql = 'SELECT * FROM `users` WHERE `external_id` = %s'
         params = (msg.contact.user_id,)

@@ -1,5 +1,6 @@
 from aiogram import types
 
+from utils.callback_factorys.guest_callback import get_order_callback
 from utils.requests.users_reqests import UserRequest
 
 
@@ -36,6 +37,38 @@ async def guest_pricing(msg: types.Message):
     await msg.answer('\n'.join(txt))
 
 
-async def guest_price(msg: types.Message):
-    txt = ['Дякуємо за вибір']
-    await msg.answer('\n'.join(txt))
+async def guest_price(msg: types.Message, regexp_command=None):
+    price_id = regexp_command.group(1)
+    prices = await UserRequest.get_prices()
+    p = next((x for x in prices if x['id'] == int(price_id)), False)
+    if isinstance(p, dict):
+        txt = [
+            '🎁 Ти дійсно бажаєш замовити пакет послуг <b>%s %s</b>\n'
+            'загальна вартість <b>%s грн.</b> \n'
+            'за <b>%s занять</b>\n'
+            '(%s грн./заняття)?\n\n'
+            'Для підтвердження натисни <b>"Замовити"</b>' %
+            (p.get('name'), p.get('group'), p.get('price')*p.get('count'), p.get('count'), p.get('price'))
+        ]
+        keyboard = types.InlineKeyboardMarkup()
+        keyboard.add(types.InlineKeyboardButton('🎁 Замовити',
+                     callback_data=get_order_callback(price_id, p.get('price')*p.get('count'))))
+    else:
+        txt = [f'😔 Нажаль пакета з ідентифікатором: {price_id} не існує, або він втратив свою актуальність. '
+               f'😊 Обери, будь-ласка, інший пакет послуг серед актуальних! 👉 /pricing']
+        keyboard = None
+    await msg.answer('\n'.join(txt), reply_markup=keyboard)
+
+
+async def ordered_price(query: types.CallbackQuery, callback_data: dict):
+    price_id = int(callback_data['id'])
+    cost = int(callback_data['cost'])
+    user_id = query.message.chat.id
+    r = await UserRequest.new_oder(price_id, cost, user_id)
+    if r.get('success'):
+        await query.answer('✅ Замовлення прийняте!')
+        await query.message.edit_text('✅ Замовлення прийняте! \nОчікуй дзвінка, або відповіді менеджера 👩‍🦰\n'
+                                      'Вже зовсім скоро ти приєднаєшся \nдо Tutor-Math ❤️')
+    else:
+        await query.answer('❌ Виникла помилка, повторіть спробу пізніше!')
+
