@@ -1,6 +1,17 @@
 from utils.misc.user_utils import user_possibilities, user_roles, registration_status
 
 
+def help_text():
+    txt = [
+        '👨‍🦳 З чого розпочати?\n',
+        'ось кілька команд\n',
+        '/start - Розпочати роботу',
+        '/help - Отримати довідку',
+        '/info - Інформація про проект'
+    ]
+    return '\n'.join(txt)
+
+
 def first_text(name: str):
     txt = [
         f'👨‍🦳 Привіт, {name}! Мене звати Платон\n',
