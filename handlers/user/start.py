@@ -1,13 +1,18 @@
 from aiogram import types
 
+from utils.db.db_api.users import User
+from utils.keyboards.global_kbd import send_phone, tutor_menu, student_menu
+from utils.letterings.intro_lett import first_text, start_guest_text, start_tutor_text, start_student_text
+
 
 async def bot_start(msg: types.Message):
-    print(msg.from_user)
-    text = f'Привіт, {msg.from_user.full_name}! Мене звати Платон, я буду твоїм віртуальним асистентом, ' \
-           f'моє основне призначення  - налагодження комунікації між учнями, репетиторами та освітнім центром. ' \
-           f'Для початку давай спробуємо знайти твій номер телефону в базі освітнього центру, ' \
-           f'так я зможу зрозуміти твою роль та наділити тебе відповідними повноваженнями. \n ' \
-           f'Для цього надішли мені його використавши відповідну кнопку.'
-    keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
-    keyboard.add(types.KeyboardButton(text="📞 Надіслати номер телефону", request_contact=True))
-    await msg.answer(text, reply_markup=keyboard)
+    u = await User.find(msg.from_user.id)
+    if u is None:
+        await msg.answer(first_text(msg.from_user.full_name), reply_markup=send_phone())
+    else:
+        if u.get('role') == 'student':
+            await msg.answer(start_student_text(u.get('first_name')), reply_markup=student_menu())
+        elif u.get('role') == 'tutor':
+            await msg.answer(start_tutor_text(u.get('first_name')), reply_markup=tutor_menu())
+        else:
+            await msg.answer(start_guest_text(u), reply_markup=send_phone())
