@@ -6,6 +6,10 @@ def send_phone():
     return k.add(types.KeyboardButton(text="📞 Надіслати номер телефону", request_contact=True))
 
 
+def remove_kbd():
+    return types.ReplyKeyboardRemove()
+
+
 def tutor_menu():
     k = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
     k.add(types.KeyboardButton(text="Показати розклад"))

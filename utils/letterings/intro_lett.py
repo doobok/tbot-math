@@ -1,4 +1,4 @@
-from utils.misc.user_utils import user_possibilities
+from utils.misc.user_utils import user_possibilities, user_roles, registration_status
 
 
 def first_text(name: str):
@@ -39,3 +39,22 @@ def start_student_text(name: str):
         'З чого ти бажаєш розпочати?',
     ]
     return '\n'.join(txt)
+
+
+def bot_contact_text(user: dict, name, inf):
+    func = user_possibilities[user['role']]
+    role = user_roles[user['role']]
+    status = registration_status[inf]
+    txt = [
+        f'👨‍🦳 Привіт, {name}!\n',
+        f'{status}\n',
+        f'Твоя поточна роль в системі: <b>{role}</b>\n'
+        f'Для тебе доступні такий функціонал: \n\n {func} \n\n'
+        'перейти в головне меню 👉 /start\n',
+        '*якщо роль не відповідає дійсності, звʼяжись з нами, ми спробуємо допомогти'
+    ]
+    return '\n'.join(txt)
+
+
+def err_phone_text():
+    return 'Буде круто коли ти відправиш мені власний номер телефону 😜'
