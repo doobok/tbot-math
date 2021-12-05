@@ -11,4 +11,6 @@ menu_str = {
     'student-balance': '💵 Мій баланс',
     'student-lessons-history': '🕘 Історія занять',
     'student-pass-history': '🦥 Пропуски',
+
+    'refill-balance': '💳 Поповнити баланс',
 }

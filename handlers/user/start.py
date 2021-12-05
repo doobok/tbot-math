@@ -22,7 +22,8 @@ async def bot_start(msg: types.Message):
 async def main_menu(msg: types.Message):
     u = await User.find(msg.from_user.id)
     if u.get('role') == 'student':
-        await msg.answer('1', reply_markup=student_menu())
+        await msg.answer(menu_str['main-menu'], reply_markup=student_menu())
+        await msg.delete()
     elif u.get('role') == 'tutor':
         await msg.answer(menu_str['main-menu'], reply_markup=tutor_menu())
         await msg.delete()

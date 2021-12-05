@@ -20,6 +20,29 @@ async def tutor_balance_text(user_id: int):
     return '\n\n'.join(txt)
 
 
+async def student_balance_text(user_id: int):
+    user = await User.find(user_id)
+    res = await UserRequest.get_balance(user.get('role'), user.get('role_id'))
+    if res.get('success') is True:
+        balance = res.get('balance')
+        if balance > 500:
+            info = '😉 На твоєму балансі достатньо коштів, Приємного навчання!'
+        elif balance > 0:
+            info = '😐 Кошти закінчуються, рекомендую поповнити рахунок для уникнення збоїв при роботі з системою'
+        else:
+            info = '🥶 Баланс спустошено! Можливі обмеження в функціоналі! Поповніть, будь-ласка, рахунок'
+        txt = [
+            '👨‍🦳 На твоєму балансі ',
+            f'💶 <b>{balance} грн.*</b>',
+            f'{info}',
+            '<i>*списання коштів з балансу відбувається раз на добу</i>'
+        ]
+    else:
+        txt = [errors_msg['is-err']]
+
+    return '\n\n'.join(txt)
+
+
 async def tutor_zoom_text(user_id: int):
     user = await User.find(user_id)
     res = await UserRequest.get_tutor_zoom(user.get('role_id'))
