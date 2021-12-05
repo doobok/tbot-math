@@ -25,3 +25,17 @@ class UserRequest(ExternalReq):
             'cost': cost,
         }
         return await UserRequest.make_request(url, data)
+
+    @staticmethod
+    async def get_balance(role: str, role_id: int):
+        url = 'get-balance'
+        data = {'role': role, 'role_id': role_id}
+        return await UserRequest.make_request(url, data)
+
+    @staticmethod
+    async def get_tutor_zoom(role_id: int):
+        url = 'tutor-zoom'
+        data = {'role_id': role_id}
+        return await UserRequest.make_request(url, data)
+
+

@@ -2,18 +2,23 @@ from aiogram import Dispatcher, types
 from aiogram.dispatcher.filters import CommandStart, CommandHelp
 
 from utils.callback_factorys.guest_callback import get_order_callback
+from utils.misc.menu_utils import menu_str
+from .balance import tutor_balance, tutor_zoom
 from .help import bot_help
 from .info import guest_info, guest_pricing, guest_price, ordered_price
-from .start import bot_start
+from .start import bot_start, main_menu
 from .contact import bot_contact
-from .another import bot_another
-from .querydefault import bot_query_another
 
 
 def setup(dp: Dispatcher):
     dp.register_message_handler(bot_start, CommandStart())
     dp.register_message_handler(bot_help, CommandHelp())
     dp.register_message_handler(bot_contact, content_types='contact')
+
+    dp.register_message_handler(main_menu, text=[menu_str['main-menu']])
+
+    dp.register_message_handler(tutor_balance, text=[menu_str['tutor-balance']])
+    dp.register_message_handler(tutor_zoom, text=[menu_str['tutor-zoom']])
 
     dp.register_message_handler(guest_info, commands=['info'])
     dp.register_message_handler(guest_pricing, commands=['pricing'])
