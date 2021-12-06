@@ -6,7 +6,7 @@ from utils.misc.menu_utils import menu_str
 from .balance import tutor_balance, tutor_zoom, student_balance
 from .help import bot_help
 from .info import guest_info, guest_pricing, guest_price, ordered_price
-from .schedule import st_lesson_history, st_pass_history
+from .schedule import st_lesson_history, st_pass_history, st_schedule
 from .start import bot_start, main_menu
 from .contact import bot_contact
 
@@ -18,6 +18,7 @@ def setup(dp: Dispatcher):
 
     dp.register_message_handler(main_menu, text=[menu_str['main-menu']])
 
+    dp.register_message_handler(st_schedule, text=[menu_str['student-schedule']])
     dp.register_message_handler(student_balance, text=[menu_str['student-balance']])
     dp.register_message_handler(st_lesson_history, text=[menu_str['student-lessons-history']])
     dp.register_message_handler(st_pass_history, text=[menu_str['student-pass-history']])

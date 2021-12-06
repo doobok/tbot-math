@@ -4,6 +4,21 @@ from utils.misc.user_utils import errors_msg
 from utils.requests.users_reqests import UserRequest
 
 
+async def st_schedule_text(user_id: int):
+    user = await User.find(user_id)
+    res = await UserRequest.st_schedule(user.get('role_id'))
+    print(res)
+    if res.get('success') is True:
+        txt = ['👨‍🦳 Ось розклад твоїх занять на найближчий тиждень:\n']
+        # for ls in res.get('lessons'):
+        #     txt.append('👉 заняття %s' % date_with_weekday(ls.get('created_at')))
+        # txt.append('\n*<i>Цей перелік містить до 10 занять, які відбулись нещодавно</i>')
+    else:
+        txt = [errors_msg['is-err']]
+
+    return '\n'.join(txt)
+
+
 async def st_lesson_history_text(user_id: int):
     user = await User.find(user_id)
     res = await UserRequest.st_lessons_history(user.get('role_id'))
@@ -23,7 +38,6 @@ async def st_pass_history_text(user_id: int):
     res = await UserRequest.st_pass_history(user.get('role_id'))
     if res.get('success') is True:
         passes = res.get('passes')
-        print(len(passes))
         if len(passes) > 0:
             txt = ['👨‍🦳 Заняття, пропущені тобою:\n']
             for ps in passes:
