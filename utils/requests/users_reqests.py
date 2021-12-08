@@ -39,6 +39,12 @@ class UserRequest(ExternalReq):
         return await UserRequest.make_request(url, data)
 
     @staticmethod
+    async def tutor_schedule(role_id: int, shift: int):
+        url = 'tutor-schedule'
+        data = {'role_id': role_id, 'shift': shift}
+        return await UserRequest.make_request(url, data)
+
+    @staticmethod
     async def st_schedule(role_id: int):
         url = 'student-schedule'
         data = {'role_id': role_id}

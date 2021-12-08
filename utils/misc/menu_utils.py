@@ -4,6 +4,8 @@ menu_str = {
     'to-order': '🎁 Замовити',
 
     'tutor-schedule': '🗓 Розклад занять',
+    'tutor-schedule-next': 'наступний ➡️',
+    'tutor-schedule-prev': '⬅️ попередній',
     'tutor-balance': '💵 Баланс',
     'tutor-zoom': '🎦 Zoom аккаунт',
 

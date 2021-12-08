@@ -1,3 +1,5 @@
+from aiogram.dispatcher import FSMContext
+
 from utils.db.db_api.users import User
 from utils.misc.date_utils import date_with_weekday, date_weekday, date_hour
 from utils.misc.user_utils import errors_msg
@@ -22,6 +24,33 @@ async def st_schedule_text(user_id: int):
             txt.append('\n*<i>це твій актуальний розклад</i>')
         else:
             txt = ['👨‍🦳 На найближчий час занять не заплановано.']
+    else:
+        txt = [errors_msg['is-err']]
+
+    return '\n'.join(txt)
+
+
+async def tutor_schedule_text(user_id: int, shift: int, state: FSMContext):
+    user_data = await state.get_data()
+    day_shift = int(user_data.get('menu_shift', 0)) + shift
+    print(day_shift)
+    user = await User.find(user_id)
+    res = await UserRequest.tutor_schedule(user.get('role_id'), shift=day_shift)
+    await state.update_data(menu_shift=day_shift)
+    if res.get('success') is True:
+        txt = ['👨‍🦳 Ваш розклад занять\n\n 🗓 <b>%s</b>\n' % date_weekday(res.get('date'))]
+        lessons = res.get('lessons')
+        if len(lessons) > 0:
+            for i in lessons:
+                if i.get('classroom_id') == 3:
+                    cabinet = '🌎 online'
+                else:
+                    cabinet = 'кабінет %s' % i.get('classroom_id')
+                txt.append('👉 <b>%s</b>, %s, %s' %
+                           (date_hour(i.get('start')), i.get('name'), cabinet))
+        else:
+            txt.append('На цей день занять не заплановано.')
+        txt.append('\n<i>*переміщайтесь між днями за допомогою кнопок керування</i>')
     else:
         txt = [errors_msg['is-err']]
 
