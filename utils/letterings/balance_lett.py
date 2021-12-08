@@ -41,23 +41,3 @@ async def student_balance_text(user_id: int):
         txt = [errors_msg['is-err']]
 
     return '\n\n'.join(txt)
-
-
-async def tutor_zoom_text(user_id: int):
-    user = await User.find(user_id)
-    res = await UserRequest.get_tutor_zoom(user.get('role_id'))
-    if res:
-        txt = [
-            '👨‍🦳 ось Ваші дані для аутентифікації в Zoom:\n\n'
-            'email: <code>%s</code>\n'
-            'пароль: <code>%s</code>\n\n'
-            'Для підключення до онлайн занять у Вас також має бути встановлений клієнт Zoom, який можна завантажити '
-            'за посиланням 👉 https://zoom.us/download\n\n'
-            '<i>* при зміні пароля на порталі Zoom вказаний в цьому повідомленні пароль втрачає свою дію</i>' %
-            (res.get('zoom_email'), res.get('zoom_password'))
-        ]
-    else:
-        txt = [errors_msg['is-err']]
-
-    return '\n\n'.join(txt)
-
