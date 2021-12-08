@@ -10,6 +10,16 @@ def st_balance_menu():
     return k
 
 
+def st_schedule_menu():
+    k = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
+    k.add(
+        types.KeyboardButton(text=menu_str['student-lessons-history']),
+        types.KeyboardButton(text=menu_str['student-pass-history'])
+    )
+    k.add(types.KeyboardButton(text=menu_str['main-menu']))
+    return k
+
+
 def st_lesson_history_menu():
     k = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
     k.add(
