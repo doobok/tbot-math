@@ -12,7 +12,7 @@ async def st_schedule_text(user_id: int):
         if len(lessons) > 0:
             txt = ['👨‍🦳 Ось твої заняття на найближчий тиждень:']
             for key, day in lessons.items():
-                txt.append(f'\n🗓 <b>{date_weekday(key)}</b>\n')
+                txt.append(f'\n🗓 <b>{date_weekday(key)}</b>')
                 for i in day:
                     online = ''
                     if i.get('online') is True:
@@ -56,5 +56,22 @@ async def st_pass_history_text(user_id: int):
             txt = ['🎉 На даний час в тебе немає пропусків.\nТак тримати! 👍']
     else:
         txt = [errors_msg['is-err']]
+
+    return '\n'.join(txt)
+
+
+async def st_zoom_url_text(user_id: int, lesson_id: int):
+    user = await User.find(user_id)
+    res = await UserRequest.st_zoom_url(user.get('role_id'), lesson_id)
+    if res.get('success') is True:
+        z = res.get('zoom')
+        txt = ['🔗 Ось твоє посилання для заняття 👇\n\n%s\n\n'
+               'Ти також можеш долучитися до заняття за допомогою ідентифікатора та пароля\n\n'
+               '<b>Ідентифікатор:</b> %s\n<b>Пароль:</b> %s\n\n'
+               'Само собою в тебе повинен бути установлений клієнт Zoom, завантажити його можна '
+               'за посиланням https://zoom.us/download'
+               % (z.get('meeting_url'), z.get('zoom_meeting_id'), z.get('meeting_password'))]
+    else:
+        txt = [errors_msg[res.get('warning')]]
 
     return '\n'.join(txt)

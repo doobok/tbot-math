@@ -56,4 +56,9 @@ class UserRequest(ExternalReq):
         data = {'role_id': role_id}
         return await UserRequest.make_request(url, data)
 
+    @staticmethod
+    async def st_zoom_url(role_id: int, lesson_id: int):
+        url = 'student-zoom-url'
+        data = {'role_id': role_id, 'lesson_id': lesson_id}
+        return await UserRequest.make_request(url, data)
 

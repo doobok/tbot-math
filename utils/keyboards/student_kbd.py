@@ -20,6 +20,16 @@ def st_schedule_menu():
     return k
 
 
+def st_zoom_url_menu():
+    k = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
+    k.add(
+        types.KeyboardButton(text=menu_str['student-schedule']),
+        types.KeyboardButton(text=menu_str['refill-balance'])
+    )
+    k.add(types.KeyboardButton(text=menu_str['main-menu']))
+    return k
+
+
 def st_lesson_history_menu():
     k = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
     k.add(
