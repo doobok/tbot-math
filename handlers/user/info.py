@@ -15,7 +15,7 @@ async def guest_pricing(msg: types.Message):
     await msg.answer(await info_prices_text(), disable_web_page_preview=True)
 
 
-async def guest_price(msg: types.Message, regexp_command=None):
+async def guest_price_select(msg: types.Message, regexp_command=None):
     price_id = regexp_command.group(1)
     prices = await UserRequest.get_prices()
     p = next((x for x in prices if x['id'] == int(price_id)), False)
@@ -28,7 +28,7 @@ async def guest_price(msg: types.Message, regexp_command=None):
     await msg.answer(txt, reply_markup=keyboard)
 
 
-async def ordered_price(query: types.CallbackQuery, state: FSMContext, callback_data: dict):
+async def guest_price_ordered(query: types.CallbackQuery, state: FSMContext, callback_data: dict):
     price_id = int(callback_data['id'])
     cost = int(callback_data['cost'])
     user_id = query.message.chat.id
