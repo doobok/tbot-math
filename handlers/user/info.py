@@ -1,4 +1,5 @@
 from aiogram import types
+from aiogram.dispatcher import FSMContext
 
 from utils.keyboards.info_kbd import get_price_kbd
 from utils.letterings.info_lett import info_text, info_prices_text, err_get_price_text, get_price_text, \
@@ -27,11 +28,11 @@ async def guest_price(msg: types.Message, regexp_command=None):
     await msg.answer(txt, reply_markup=keyboard)
 
 
-async def ordered_price(query: types.CallbackQuery, callback_data: dict):
+async def ordered_price(query: types.CallbackQuery, state: FSMContext, callback_data: dict):
     price_id = int(callback_data['id'])
     cost = int(callback_data['cost'])
     user_id = query.message.chat.id
-    r = await UserRequest.new_oder(price_id, cost, user_id)
+    r = await UserRequest.new_oder(price_id, cost, user_id, state)
     if r.get('success'):
         await query.message.edit_text(get_price_success_text())
     else:

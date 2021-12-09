@@ -1,3 +1,5 @@
+from aiogram.dispatcher import FSMContext
+
 from .api.requests import ExternalReq
 from ..db.db_api.users import User
 
@@ -15,8 +17,8 @@ class UserRequest(ExternalReq):
         return await UserRequest.make_request(url)
 
     @staticmethod
-    async def new_oder(price_id: int, cost: int, user_id: int):
-        user = await User.find(user_id)
+    async def new_oder(price_id: int, cost: int, user_id: int, state: FSMContext):
+        user = await User.find(user_id, state)
         url = 'new-order'
         data = {
             'name': user.get('first_name'),

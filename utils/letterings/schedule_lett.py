@@ -6,8 +6,8 @@ from utils.misc.user_utils import errors_msg
 from utils.requests.users_reqests import UserRequest
 
 
-async def st_schedule_text(user_id: int):
-    user = await User.find(user_id)
+async def st_schedule_text(user_id: int, state: FSMContext):
+    user = await User.find(user_id, state)
     res = await UserRequest.st_schedule(user.get('role_id'))
     if res.get('success') is True:
         lessons = res.get('lessons')
@@ -34,7 +34,7 @@ async def tutor_schedule_text(user_id: int, shift: int, state: FSMContext):
     user_data = await state.get_data()
     day_shift = int(user_data.get('menu_shift', 0)) + shift
     print(day_shift)
-    user = await User.find(user_id)
+    user = await User.find(user_id, state)
     res = await UserRequest.tutor_schedule(user.get('role_id'), shift=day_shift)
     await state.update_data(menu_shift=day_shift)
     if res.get('success') is True:
@@ -57,8 +57,8 @@ async def tutor_schedule_text(user_id: int, shift: int, state: FSMContext):
     return '\n'.join(txt)
 
 
-async def st_lesson_history_text(user_id: int):
-    user = await User.find(user_id)
+async def st_lesson_history_text(user_id: int, state: FSMContext):
+    user = await User.find(user_id, state)
     res = await UserRequest.st_lessons_history(user.get('role_id'))
     if res.get('success') is True:
         txt = ['👨‍🦳 Ось твої нещодавні заняття:\n']
@@ -71,8 +71,8 @@ async def st_lesson_history_text(user_id: int):
     return '\n'.join(txt)
 
 
-async def st_pass_history_text(user_id: int):
-    user = await User.find(user_id)
+async def st_pass_history_text(user_id: int, state: FSMContext):
+    user = await User.find(user_id, state)
     res = await UserRequest.st_pass_history(user.get('role_id'))
     if res.get('success') is True:
         passes = res.get('passes')
@@ -89,8 +89,8 @@ async def st_pass_history_text(user_id: int):
     return '\n'.join(txt)
 
 
-async def tutor_zoom_text(user_id: int):
-    user = await User.find(user_id)
+async def tutor_zoom_text(user_id: int, state: FSMContext):
+    user = await User.find(user_id, state)
     res = await UserRequest.get_tutor_zoom(user.get('role_id'))
     if res:
         txt = [
@@ -108,8 +108,8 @@ async def tutor_zoom_text(user_id: int):
     return '\n\n'.join(txt)
 
 
-async def st_zoom_url_text(user_id: int, lesson_id: int):
-    user = await User.find(user_id)
+async def st_zoom_url_text(user_id: int, lesson_id: int, state: FSMContext):
+    user = await User.find(user_id, state)
     res = await UserRequest.st_zoom_url(user.get('role_id'), lesson_id)
     if res.get('success') is True:
         z = res.get('zoom')

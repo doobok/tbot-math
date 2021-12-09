@@ -1,10 +1,12 @@
+from aiogram.dispatcher import FSMContext
+
 from utils.db.db_api.users import User
 from utils.misc.user_utils import errors_msg
 from utils.requests.users_reqests import UserRequest
 
 
-async def tutor_balance_text(user_id: int):
-    user = await User.find(user_id)
+async def tutor_balance_text(user_id: int, state: FSMContext):
+    user = await User.find(user_id, state)
     res = await UserRequest.get_balance(user.get('role'), user.get('role_id'))
     if res.get('success') is True:
         balance = res.get('balance')
@@ -20,8 +22,8 @@ async def tutor_balance_text(user_id: int):
     return '\n\n'.join(txt)
 
 
-async def student_balance_text(user_id: int):
-    user = await User.find(user_id)
+async def student_balance_text(user_id: int, state: FSMContext):
+    user = await User.find(user_id, state)
     res = await UserRequest.get_balance(user.get('role'), user.get('role_id'))
     if res.get('success') is True:
         balance = res.get('balance')
