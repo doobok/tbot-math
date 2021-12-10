@@ -15,4 +15,6 @@ menu_str = {
     'student-pass-history': '🦥 Пропуски',
 
     'refill-balance': '💳 Поповнити баланс',
+    'refill-balance-cancel': '❌ Скасувати',
+    'refill-balance-confirm': '✅ Продовжити',
 }

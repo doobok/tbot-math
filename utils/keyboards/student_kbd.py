@@ -10,6 +10,21 @@ def st_balance_menu():
     return k
 
 
+def st_balance_cancel():
+    k = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
+    k.add(types.KeyboardButton(text=menu_str['refill-balance-cancel']))
+    return k
+
+
+def st_balance_confirm():
+    k = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
+    k.add(
+        types.KeyboardButton(text=menu_str['refill-balance-cancel']),
+        types.KeyboardButton(text=menu_str['refill-balance-confirm'])
+    )
+    return k
+
+
 def st_schedule_menu():
     k = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
     k.add(

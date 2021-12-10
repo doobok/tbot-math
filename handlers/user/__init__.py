@@ -1,10 +1,11 @@
-from aiogram import Dispatcher, types
+from aiogram import Dispatcher
 from aiogram.dispatcher.filters import CommandStart, CommandHelp
 
+from states.user.user import BalanceRefill
 from utils.callback_factorys.guest_callback import get_order_callback
 from utils.callback_factorys.tutor_callback import tutor_schedule_callback
 from utils.misc.menu_utils import menu_str
-from .balance import tutor_balance, student_balance
+from .balance import tutor_balance, student_balance, st_balance_refill, st_balance_refill_sum, st_balance_confirm_sum
 from .help import bot_help
 from .info import guest_info, guest_pricing, guest_price_select, guest_price_ordered
 from .schedule import st_lesson_history, st_pass_history, st_schedule, st_zoom_url, tutor_zoom, tutor_schedule, \
@@ -22,9 +23,14 @@ def setup(dp: Dispatcher):
 
     dp.register_message_handler(st_schedule, text=[menu_str['student-schedule']], state="*")
     dp.register_message_handler(st_zoom_url, regexp_commands=['online_([0-9]*)'], state="*")
-    dp.register_message_handler(student_balance, text=[menu_str['student-balance']], state="*")
     dp.register_message_handler(st_lesson_history, text=[menu_str['student-lessons-history']], state="*")
     dp.register_message_handler(st_pass_history, text=[menu_str['student-pass-history']], state="*")
+    dp.register_message_handler(
+        student_balance, text=[menu_str['student-balance'], menu_str['refill-balance-cancel']], state="*")
+    dp.register_message_handler(st_balance_refill, text=[menu_str['refill-balance']], state="*")
+    dp.register_message_handler(st_balance_refill_sum, state=BalanceRefill.enter_sum)
+    dp.register_message_handler(
+        st_balance_confirm_sum, text=[menu_str['refill-balance-confirm']], state=BalanceRefill.confirm_sum)
 
     dp.register_message_handler(tutor_schedule, text=[menu_str['tutor-schedule']], state="*")
     dp.register_message_handler(tutor_balance, text=[menu_str['tutor-balance']], state="*")

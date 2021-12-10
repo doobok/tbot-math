@@ -1,10 +1,6 @@
 from aiogram.dispatcher.filters.state import State, StatesGroup
 
 
-class TutorSchedule(StatesGroup):
-    schedule_nav = State()
-
-
-class MainState(StatesGroup):
-    role = State()
-    role_id = State()
+class BalanceRefill(StatesGroup):
+    enter_sum = State()
+    confirm_sum = State()

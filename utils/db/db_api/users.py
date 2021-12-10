@@ -1,7 +1,6 @@
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 
-from states.user.user import MainState
 from .storages import MysqlConnection
 
 
