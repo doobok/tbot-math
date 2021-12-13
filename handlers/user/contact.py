@@ -11,7 +11,7 @@ from utils.requests.users_reqests import UserRequest
 
 async def bot_contact(msg: types.Message, state: FSMContext) -> None:
     if msg.from_user.id == msg.contact.user_id:
-        user = await UserRequest.get_role(int(msg.contact.phone_number))
+        user = await UserRequest.get_role(int(msg.contact.phone_number), int(msg.from_user.id))
         if await User.is_new(msg):
             await User.register(msg, user)
             inf = 'new'

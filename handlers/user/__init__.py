@@ -26,11 +26,13 @@ def setup(dp: Dispatcher):
     dp.register_message_handler(st_lesson_history, text=[menu_str['student-lessons-history']], state="*")
     dp.register_message_handler(st_pass_history, text=[menu_str['student-pass-history']], state="*")
     dp.register_message_handler(
-        student_balance, text=[menu_str['student-balance'], menu_str['refill-balance-cancel']], state="*")
+        student_balance, text=[menu_str['student-balance'], menu_str['refill-balance-cancel']], state="*"
+    )
     dp.register_message_handler(st_balance_refill, text=[menu_str['refill-balance']], state="*")
     dp.register_message_handler(st_balance_refill_sum, state=BalanceRefill.enter_sum)
     dp.register_message_handler(
-        st_balance_confirm_sum, text=[menu_str['refill-balance-confirm']], state=BalanceRefill.confirm_sum)
+        st_balance_confirm_sum, text=[menu_str['refill-balance-confirm']], state=BalanceRefill.confirm_sum
+    )
 
     dp.register_message_handler(tutor_schedule, text=[menu_str['tutor-schedule']], state="*")
     dp.register_message_handler(tutor_balance, text=[menu_str['tutor-balance']], state="*")

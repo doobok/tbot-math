@@ -6,9 +6,9 @@ from ..db.db_api.users import User
 
 class UserRequest(ExternalReq):
     @staticmethod
-    async def get_role(phone: int):
+    async def get_role(phone: int, uid: int):
         url = 'auth-bot-user'
-        data = {'phone': phone}
+        data = {'phone': phone, 'uid': uid}
         return await UserRequest.make_request(url, data)
 
     @staticmethod
