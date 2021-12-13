@@ -1,0 +1,13 @@
+my_stickers = {
+    'bal-hi': 'CAACAgIAAxkBAAEDerJht7OPSrG3cGu1HIEby30gRRqAPwACJA4AAhukGUkUO_1wAAFD-FsjBA',
+    'bal-med': 'CAACAgIAAxkBAAEDerRht7O7H4dTQUgCFzVsSlEQB699UgACmA4AAlKskEjUQEnBwC6f_CME',
+    'bal-low': 'CAACAgIAAxkBAAEDerZht7PTRv3Yuc9TQY51Wx0pxHGqhAACYAwAAmNnUUtHjKwDsnnqayME',
+    'nothing': 'CAACAgIAAxkBAAEDepxht66cUqJjqfzzxlogV1ahh1DonAACzw8AAq_pSEv9aT0u6BZOXSME',
+    'hypno': 'CAACAgIAAxkBAAEDesBht7mh-uJJnmg10xSEKPPbjIjJYgACMA4AAvMaQEvSB0ZKPv3T_CME',
+    'sick': 'CAACAgIAAxkBAAEDesJht7o1mOsTPt210-EiD-I2NuALPwAC7Q0AAvoZQEsuENaOoeTK7yME',
+    'newspaper': 'CAACAgIAAxkBAAEDesRht7pm3V4g5m_M1SAm8iBPQJnqfQACEw4AAqJRQEtidw0C_dGPDiME',
+    'schedule': 'CAACAgEAAxkBAAEDesxht8AH_F0JpQMnNjM87BvJZX1aegACIQgAAuN4BAABUdefydQrMKMjBA',
+    'attention': 'CAACAgIAAxkBAAEDeshht7wkJKQbTJCOZz04thK2z5h3kQACdwwAAiQzIEleLGR3DXHtyiME',
+    'value': 'CAACAgIAAxkBAAEDespht71arWE0fk20g94bq0GO-ImE_gAC0A0AAnfAmUiflCKVAdXhMSME',
+    'hello': 'CAACAgIAAxkBAAEDes5ht8DIJYbA6PsmmEd4IaESuQqMNQACHA8AApMmQEvc7sL56lfEtiME',
+}

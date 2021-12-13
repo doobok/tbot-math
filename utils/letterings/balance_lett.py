@@ -6,7 +6,8 @@ from aiogram.dispatcher import FSMContext
 from data.config import api_host
 from states.user import BalanceRefill
 from utils.db.db_api.users import User
-from utils.keyboards.student_kbd import st_balance_confirm, st_balance_cancel
+from utils.keyboards.student_kbd import st_balance_confirm, st_balance_cancel, st_balance_menu
+from utils.misc.stickers import my_stickers
 from utils.misc.user_utils import errors_msg
 from utils.requests.users_reqests import UserRequest
 
@@ -28,17 +29,20 @@ async def tutor_balance_text(user_id: int, state: FSMContext):
     return '\n\n'.join(txt)
 
 
-async def student_balance_text(user_id: int, state: FSMContext):
+async def student_balance_text(msg: types.Message, state: FSMContext):
     await state.reset_state(with_data=False)
-    user = await User.find(user_id, state)
+    user = await User.find(msg.from_user.id, state)
     res = await UserRequest.get_balance(user.get('role'), user.get('role_id'))
     if res.get('success') is True:
         balance = res.get('balance')
         if balance > 500:
+            sticker = my_stickers['bal-hi']
             info = '😉 На твоєму балансі достатньо коштів, Приємного навчання!'
         elif balance > 0:
+            sticker = my_stickers['bal-med']
             info = '😐 Кошти закінчуються, рекомендую поповнити рахунок для уникнення збоїв при роботі з системою'
         else:
+            sticker = my_stickers['bal-low']
             info = '🥶 Баланс спустошено! Можливі обмеження в функціоналі! Поповніть, будь-ласка, рахунок'
         txt = [
             '👨‍🦳 На твоєму балансі ',
@@ -47,9 +51,10 @@ async def student_balance_text(user_id: int, state: FSMContext):
             '<i>*списання коштів з балансу відбувається раз на добу</i>'
         ]
     else:
+        sticker = my_stickers['nothing']
         txt = [errors_msg['is-err']]
-
-    return '\n\n'.join(txt)
+    await msg.answer_sticker(sticker)
+    await msg.answer('\n\n'.join(txt), reply_markup=st_balance_menu())
 
 
 async def enter_balance_text(state: FSMContext):

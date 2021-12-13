@@ -6,9 +6,11 @@ from utils.keyboards.student_kbd import st_lesson_history_menu, st_pass_history_
 from utils.keyboards.tutor_kbd import tutor_schedule_menu
 from utils.letterings.schedule_lett import st_lesson_history_text, st_pass_history_text, st_schedule_text, \
     st_zoom_url_text, tutor_zoom_text, tutor_schedule_text
+from utils.misc.stickers import my_stickers
 
 
 async def st_schedule(msg: types.Message, state: FSMContext) -> None:
+    await msg.answer_sticker(my_stickers['schedule'])
     await msg.answer(await st_schedule_text(msg.from_user.id, state), reply_markup=st_schedule_menu())
 
 
@@ -19,10 +21,12 @@ async def st_zoom_url(msg: types.Message,  state: FSMContext, regexp_command=Non
 
 
 async def st_lesson_history(msg: types.Message, state: FSMContext) -> None:
+    await msg.answer_sticker(my_stickers['newspaper'])
     await msg.answer(await st_lesson_history_text(msg.from_user.id, state), reply_markup=st_lesson_history_menu())
 
 
 async def st_pass_history(msg: types.Message, state: FSMContext) -> None:
+    await msg.answer_sticker(my_stickers['sick'])
     await msg.answer(await st_pass_history_text(msg.from_user.id, state), reply_markup=st_pass_history_menu())
 
 

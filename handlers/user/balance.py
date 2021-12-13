@@ -5,6 +5,7 @@ from utils.keyboards.global_kbd import main_menu
 from utils.keyboards.student_kbd import st_balance_menu, st_balance_cancel
 from utils.letterings.balance_lett import tutor_balance_text, student_balance_text, enter_balance_text, \
     enter_balance_sum_text, confirm_balance_text
+from utils.misc.stickers import my_stickers
 
 
 async def tutor_balance(msg: types.Message, state: FSMContext) -> None:
@@ -12,10 +13,11 @@ async def tutor_balance(msg: types.Message, state: FSMContext) -> None:
 
 
 async def student_balance(msg: types.Message, state: FSMContext) -> None:
-    await msg.answer(await student_balance_text(msg.from_user.id, state), reply_markup=st_balance_menu())
+    await student_balance_text(msg, state)
 
 
 async def st_balance_refill(msg: types.Message, state: FSMContext) -> None:
+    await msg.answer_sticker(my_stickers['value'])
     await msg.answer(await enter_balance_text(state), reply_markup=st_balance_cancel())
 
 
@@ -24,4 +26,5 @@ async def st_balance_refill_sum(msg: types.Message, state: FSMContext) -> None:
 
 
 async def st_balance_confirm_sum(msg: types.Message, state: FSMContext) -> None:
+    await msg.answer_sticker(my_stickers['attention'])
     await msg.answer(await confirm_balance_text(state), reply_markup=main_menu())
