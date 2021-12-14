@@ -1,3 +1,4 @@
+import argparse
 from typing import List, Tuple
 
 import aiojobs as aiojobs
@@ -47,10 +48,14 @@ async def init() -> web.Application:
     app.on_shutdown.append(on_shutdown)
     return app
 
+parser = argparse.ArgumentParser(description="aiohttp bot server")
+parser.add_argument('--path')
+parser.add_argument('--port')
 
 if __name__ == '__main__':
     bot = Bot(config.BOT_TOKEN, parse_mode=ParseMode.HTML, validate_token=True)
     storage = RedisStorage2(**config.redis, db=1)
     dp = Dispatcher(bot, storage=storage)
 
-    web.run_app(init())
+    args = parser.parse_args()
+    web.run_app(init(), path=args.path, port=args.port)
