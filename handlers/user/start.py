@@ -11,6 +11,7 @@ from utils.misc.stickers import my_stickers
 async def bot_start(msg: types.Message, state: FSMContext):
     u = await User.find(msg.from_user.id, state)
     if u is None:
+        await msg.answer_sticker(my_stickers['start'])
         await msg.answer(first_text(msg.from_user.full_name), reply_markup=send_phone())
     else:
         if u.get('role') == 'student':

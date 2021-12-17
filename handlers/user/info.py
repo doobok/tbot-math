@@ -7,12 +7,12 @@ from utils.letterings.info_lett import info_text, info_prices_text, err_get_pric
 from utils.requests.users_reqests import UserRequest
 
 
-async def guest_info(msg: types.Message):
-    await msg.answer(info_text(), disable_web_page_preview=True)
+async def guest_info(msg: types.Message, state: FSMContext):
+    await info_text(msg, state)
 
 
-async def guest_pricing(msg: types.Message):
-    await msg.answer(await info_prices_text(), disable_web_page_preview=True)
+async def guest_pricing(msg: types.Message, state: FSMContext):
+    await info_prices_text(msg, state)
 
 
 async def guest_price_select(msg: types.Message, regexp_command=None):
