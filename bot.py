@@ -58,5 +58,5 @@ if __name__ == '__main__':
     dp = Dispatcher(bot, storage=storage)
 
     args = parser.parse_args()
-    # web.run_app(init(), host='127.0.0.1', port=8081)
-    web.run_app(init(), path=args.path, port=args.port)
+    web.run_app(init(), host=config.ip['db'], port=config.ip['port'])
+    # web.run_app(init(), path=args.path, port=args.port)

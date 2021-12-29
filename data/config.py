@@ -17,6 +17,7 @@ admins = []
 ip = {
     'db':    os.getenv('LOCAL_IP'),
     'redis': os.getenv('LOCAL_IP'),
+    'port': os.getenv('WEBAPP_PORT')
 }
 
 mysql_info = {
@@ -24,7 +25,7 @@ mysql_info = {
     'user':     os.getenv('DB_USER'),
     'password': os.getenv('DB_PASSWORD'),
     'db':       os.getenv('DB_NAME'),
-    'maxsize':  int(os.getenv('DB_MAX_SIZE')),
+    'maxsize':  5,
     'port':     int(os.getenv('DB_PORT')),
 }
 
